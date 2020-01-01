@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="yt.parent.dao.PageMapper">
+  <resultMap id="BaseResultMap" type="yt.parent.model.PageDO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="page_name" jdbcType="VARCHAR" property="pageName" />
+    <result column="page_fid" jdbcType="INTEGER" property="pageFid" />
+    <result column="page_status" jdbcType="INTEGER" property="pageStatus" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_guid" jdbcType="VARCHAR" property="createGuid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, page_name, page_fid, page_status, create_time, create_guid
+  </sql>
+  <select id="selectByExample" parameterType="yt.parent.model.PageExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from yt_page
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yt_page
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from yt_page
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="yt.parent.model.PageExample">
+    delete from yt_page
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="yt.parent.model.PageDO">
+    insert into yt_page (id, page_name, page_fid, 
+      page_status, create_time, create_guid
+      )
+    values (#{id,jdbcType=INTEGER}, #{pageName,jdbcType=VARCHAR}, #{pageFid,jdbcType=INTEGER}, 
+      #{pageStatus,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{createGuid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="yt.parent.model.PageDO">
+    insert into yt_page
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="pageName != null">
+        page_name,
+      </if>
+      <if test="pageFid != null">
+        page_fid,
+      </if>
+      <if test="pageStatus != null">
+        page_status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createGuid != null">
+        create_guid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pageName != null">
+        #{pageName,jdbcType=VARCHAR},
+      </if>
+      <if test="pageFid != null">
+        #{pageFid,jdbcType=INTEGER},
+      </if>
+      <if test="pageStatus != null">
+        #{pageStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createGuid != null">
+        #{createGuid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="yt.parent.model.PageExample" resultType="java.lang.Long">
+    select count(*) from yt_page
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update yt_page
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.pageName != null">
+        page_name = #{record.pageName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pageFid != null">
+        page_fid = #{record.pageFid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pageStatus != null">
+        page_status = #{record.pageStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createGuid != null">
+        create_guid = #{record.createGuid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update yt_page
+    set id = #{record.id,jdbcType=INTEGER},
+      page_name = #{record.pageName,jdbcType=VARCHAR},
+      page_fid = #{record.pageFid,jdbcType=INTEGER},
+      page_status = #{record.pageStatus,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      create_guid = #{record.createGuid,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="yt.parent.model.PageDO">
+    update yt_page
+    <set>
+      <if test="pageName != null">
+        page_name = #{pageName,jdbcType=VARCHAR},
+      </if>
+      <if test="pageFid != null">
+        page_fid = #{pageFid,jdbcType=INTEGER},
+      </if>
+      <if test="pageStatus != null">
+        page_status = #{pageStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createGuid != null">
+        create_guid = #{createGuid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="yt.parent.model.PageDO">
+    update yt_page
+    set page_name = #{pageName,jdbcType=VARCHAR},
+      page_fid = #{pageFid,jdbcType=INTEGER},
+      page_status = #{pageStatus,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_guid = #{createGuid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

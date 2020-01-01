@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="yt.parent.dao.AreaMapper">
+  <resultMap id="BaseResultMap" type="yt.parent.model.AreaDO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
+    <result column="page_id" jdbcType="INTEGER" property="pageId" />
+    <result column="area_status" jdbcType="INTEGER" property="areaStatus" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_guid" jdbcType="VARCHAR" property="createGuid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, area_name, page_id, area_status, create_time, create_guid
+  </sql>
+  <select id="selectByExample" parameterType="yt.parent.model.AreaExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from yt_area
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from yt_area
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from yt_area
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="yt.parent.model.AreaExample">
+    delete from yt_area
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="yt.parent.model.AreaDO">
+    insert into yt_area (id, area_name, page_id, 
+      area_status, create_time, create_guid
+      )
+    values (#{id,jdbcType=INTEGER}, #{areaName,jdbcType=VARCHAR}, #{pageId,jdbcType=INTEGER}, 
+      #{areaStatus,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{createGuid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="yt.parent.model.AreaDO">
+    insert into yt_area
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="areaName != null">
+        area_name,
+      </if>
+      <if test="pageId != null">
+        page_id,
+      </if>
+      <if test="areaStatus != null">
+        area_status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createGuid != null">
+        create_guid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="areaName != null">
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="pageId != null">
+        #{pageId,jdbcType=INTEGER},
+      </if>
+      <if test="areaStatus != null">
+        #{areaStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createGuid != null">
+        #{createGuid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="yt.parent.model.AreaExample" resultType="java.lang.Long">
+    select count(*) from yt_area
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update yt_area
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.areaName != null">
+        area_name = #{record.areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pageId != null">
+        page_id = #{record.pageId,jdbcType=INTEGER},
+      </if>
+      <if test="record.areaStatus != null">
+        area_status = #{record.areaStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createGuid != null">
+        create_guid = #{record.createGuid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update yt_area
+    set id = #{record.id,jdbcType=INTEGER},
+      area_name = #{record.areaName,jdbcType=VARCHAR},
+      page_id = #{record.pageId,jdbcType=INTEGER},
+      area_status = #{record.areaStatus,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      create_guid = #{record.createGuid,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="yt.parent.model.AreaDO">
+    update yt_area
+    <set>
+      <if test="areaName != null">
+        area_name = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="pageId != null">
+        page_id = #{pageId,jdbcType=INTEGER},
+      </if>
+      <if test="areaStatus != null">
+        area_status = #{areaStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createGuid != null">
+        create_guid = #{createGuid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="yt.parent.model.AreaDO">
+    update yt_area
+    set area_name = #{areaName,jdbcType=VARCHAR},
+      page_id = #{pageId,jdbcType=INTEGER},
+      area_status = #{areaStatus,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_guid = #{createGuid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
