@@ -63,6 +63,6 @@ public class PageServiceImpl implements IPageService {
             return ResultDealUtil.dealListResult(null,Boolean.FALSE,CommenErrorMsg.RESULT_EMPTY.getMsg());
         }
         List<PageDTO> pageDTOS = PageConvert.toPageDTOList(pageDOS);
-        return ResultDealUtil.dealListResult(pageDTOS,Boolean.FALSE,CommenErrorMsg.SUCCESS.getMsg());
+        return ResultDealUtil.dealListResult(pageDTOS,Boolean.TRUE,CommenErrorMsg.SUCCESS.getMsg());
     }
 }
